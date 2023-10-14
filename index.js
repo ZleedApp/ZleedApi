@@ -1,20 +1,22 @@
 require('dotenv').config();
 
-const express = require('express');
-const cors = require('cors');
+const mongoose = require('mongoose');
+const express  = require('express');
+const morgan   = require('morgan');
+const cors     = require('cors');
 
-const app = express();
+const app    = express();
+const port   = process.env.PORT || 3000;
 
-const port = process.env.PORT || 3000;
+const connectToDatabase = async () => mongoose.connect(process.env.MONGO_URI);
 
-app.use(
-  cors({
-    origin: '*'
-  })
-);
+connectToDatabase()
+  .catch((err) => console.error(err));
+
+app.use(morgan(process.env.DEV === '1' ? 'dev' : 'combined'));
+app.use(cors({
+  origin: '*'
+}));
 
 app.use('/', require('./routes/_versions'));
-
-app.listen(port, () => {
-  console.log(`${port}`);
-});
+app.listen(port);

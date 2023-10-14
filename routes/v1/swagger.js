@@ -23,6 +23,7 @@ router.get('/', (req, res) => {
     schemes: [
       'https'
     ],
+    paths: {},
     externalDocs: {
       url: 'https://docs.zleed.tv',
       description: 'Offical Zleed Docs'
