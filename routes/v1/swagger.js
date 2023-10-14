@@ -23,7 +23,66 @@ router.get('/', (req, res) => {
     schemes: [
       'https'
     ],
-    paths: {},
+    paths: {
+      '/register': {
+        post: {
+          summary: 'Register a new user',
+          description: 'Register a new user',
+          operationId: 'register',
+          consumes: [
+            'application/json'
+          ],
+          produces: [
+            'application/json'
+          ],
+          parameters: [
+            {
+              name: 'body',
+              in: 'body',
+              required: true,
+              schema: {
+                $ref: '#/definitions/Register'
+              }
+            }
+          ],
+          responses: {
+            200: {
+              description: 'OK',
+              schema: {
+                $ref: '#/definitions/RegisterSuccessResponse'
+              }
+            }
+          }
+        }
+      }
+    },
+    definitions: {
+      Register: {
+        type: 'object',
+        properties: {
+          username: {
+            type: 'string'
+          },
+          email: {
+            type: 'string'
+          },
+          password: {
+            type: 'string'
+          }
+        }
+      },
+      RegisterSuccessResponse: {
+        type: 'object',
+        properties: {
+          error: {
+            type: 'number'
+          },
+          code: {
+            type: 'string'
+          }
+        }
+      }
+    },
     externalDocs: {
       url: 'https://docs.zleed.tv',
       description: 'Offical Zleed Docs'
