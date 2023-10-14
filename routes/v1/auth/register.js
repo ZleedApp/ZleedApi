@@ -5,6 +5,7 @@ const { isEmailValid } = require('#@/tools/validators');
 
 const snowflake = require('#@/tools/snowflake');
 const bcrypt    = require('bcrypt');
+const {sign} = require('jsonwebtoken');
 
 const saltRounds = 10;
 
@@ -91,9 +92,11 @@ router.post('/', async (req, res) => {
   /////////////////////////
 
   const saltedPassword = await bcrypt.hash(password, saltRounds);
+  
+  const userId = snowflake.getUniqueID();
 
   const userDocument = new User({
-    id: snowflake.getUniqueID(),
+    id: userId,
     username: safeUsername,
     displayName: username,
     email: email,
@@ -103,11 +106,21 @@ router.post('/', async (req, res) => {
   try {
     await userDocument.save();
 
+    const token = sign(
+      {
+        id: userId,
+        email: email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '30d' }
+    );
+
     res.status(201);
 
     res.json({
       error: 0,
-      code: 'SUCCESS_USER_CREATED'
+      code: 'SUCCESS_USER_CREATED',
+      token
     });
   } catch (e) {
     if (e.code === 11000) {
