@@ -65,6 +65,18 @@ const userSchema = new models.Schema({
   }
 });
 
+const dbTestModel = new models.Schema({
+  time: {
+    type: Date,
+    required: true
+  },
+  requestHash: {
+    type: String,
+    required: true
+  }
+});
+
 module.exports = {
   User: models.model('User', userSchema),
+  DatabaseTest: models.model('Test', dbTestModel)
 };
