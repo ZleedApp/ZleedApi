@@ -4,11 +4,18 @@
   "description": "The backbones of Zleed.",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "dev": "nodemon . --exec 'npm run lint && node'",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "author": "Zleed",
   "license": "GPL-3.0",
   "dependencies": {
     "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.51.0",
+    "nodemon": "^3.0.1"
   }
 }
