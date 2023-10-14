@@ -39,7 +39,7 @@ const userSchema = new models.Schema({
   profile: {
     color: {
       type: Number,
-      default: 0,
+      default: 6514417,
       required: true
     },
     avatar: {
