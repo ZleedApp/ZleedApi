@@ -23,12 +23,25 @@ router.get('/', (req, res) => {
     schemes: [
       'https'
     ],
+    tags: [
+      {
+        name: 'auth',
+        description: 'Authentication',
+        externalDocs: {
+          description: 'Find out more',
+          url: 'https://docs.zleed.tv/api/auth/index.html'
+        }
+      }
+    ],
     paths: {
       '/register': {
         post: {
           summary: 'Register a new user',
           description: 'Register a new user',
           operationId: 'register',
+          tags: [
+            'auth'
+          ],
           consumes: [
             'application/json'
           ],
@@ -85,7 +98,7 @@ router.get('/', (req, res) => {
     },
     externalDocs: {
       url: 'https://docs.zleed.tv',
-      description: 'Offical Zleed Docs'
+      description: 'Find out more'
     }
   });
 });
