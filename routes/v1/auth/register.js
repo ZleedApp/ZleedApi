@@ -97,12 +97,12 @@ router.post('/', async (req, res) => {
   const userId   = snowflake.getUniqueID();
   const StreamId = snowflake.getUniqueID();
 
-  const stringBuff = new Buffer(userId);
+  const stringBuff = new Buffer(userId.toString());
   
   const hashedSaltedPassword = crypto
     .createHash('sha256')
     .update(saltedPassword)
-    .digest('hex')
+    .digest('hex');
 
   const streamKey = `${stringBuff.toString('base64')}.${hashedSaltedPassword}`;
 

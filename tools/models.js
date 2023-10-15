@@ -4,7 +4,6 @@ const connectionSchema = new models.Schema({
   id: {
     type: BigInt,
     required: true,
-    index: true,
     unique: true
   },
   name: {
@@ -189,7 +188,6 @@ const commentSchema = new models.Schema({
   id: {
     type: BigInt,
     required: true,
-    index: true,
     unique: true
   },
   content: {
