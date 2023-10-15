@@ -5,6 +5,8 @@ const express  = require('express');
 const morgan   = require('morgan');
 const cors     = require('cors');
 
+const { Request } = require('./tools/models');
+
 const app    = express();
 const port   = process.env.PORT || 3000;
 
@@ -18,6 +20,19 @@ app.use(morgan(process.env.DEV === '1' ? 'dev' : 'combined'));
 app.use(cors({
   origin: '*'
 }));
+
+app.use(async (req, res, next) => {
+  const request = new Request({
+    date: new Date(),
+    method: req.method,
+    path: req.path,
+    userAgent: req.headers['user-agent'],
+  });
+  
+  await request.save();
+  
+  next();
+});
 
 BigInt.prototype.toJSON = function() { return this.toString(); };
 

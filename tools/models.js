@@ -231,8 +231,33 @@ const communityPostsSchema = new models.Schema({
   }
 });
 
+const requestSchema = new models.Schema({
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  path: {
+    type: String,
+    default: '',
+    required: true
+  },
+  method: {
+    type: String,
+    default: '',
+    required: true
+  },
+  userAgent: {
+    type: String,
+    default: '',
+    required: true
+  }
+});
+
 module.exports = {
   User: models.model('User', userSchema),
   Stream: models.model('Stream', streamSchema),
-  CommunityPost: models.model('Post', communityPostsSchema)
+  CommunityPost: models.model('Post', communityPostsSchema),
+  
+  Request: models.model('Request', requestSchema)
 };
