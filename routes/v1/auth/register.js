@@ -1,11 +1,12 @@
 const express = require('express');
 
-const { User } = require('#@/tools/models');
+const { User, Stream } = require('#@/tools/models');
 const { isEmailValid } = require('#@/tools/validators');
 
 const snowflake = require('#@/tools/snowflake');
 const bcrypt    = require('bcrypt');
 const {sign} = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const saltRounds = 10;
 
@@ -93,17 +94,38 @@ router.post('/', async (req, res) => {
 
   const saltedPassword = await bcrypt.hash(password, saltRounds);
   
-  const userId = snowflake.getUniqueID();
+  const userId   = snowflake.getUniqueID();
+  const StreamId = snowflake.getUniqueID();
 
+  const stringBuff = new Buffer(userId);
+  
+  const hashedSaltedPassword = crypto
+    .createHash('sha256')
+    .update(saltedPassword)
+    .digest('hex')
+
+  const streamKey = `${stringBuff.toString('base64')}.${hashedSaltedPassword}`;
+
+  const streamDocument = new Stream({
+    id: StreamId,
+    title: 'Untitled Stream',
+    game: 0,
+    key: streamKey,
+    lastStartedAt: new Date(),
+    lastEndedAt: new Date()
+  });
+  
   const userDocument = new User({
     id: userId,
     username: safeUsername,
     displayName: username,
     email: email,
     password: saltedPassword,
+    stream: StreamId
   });
-
+  
   try {
+    await streamDocument.save();
     await userDocument.save();
 
     const token = sign(
