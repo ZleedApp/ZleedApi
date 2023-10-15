@@ -7,18 +7,6 @@ const { DatabaseTest } = require('#@/tools/models');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const requestToHash = `${req.ip}-${req.headers['user-agent']}+${Math.random() * 1000}}`;
-
-  const userDocument = new DatabaseTest({
-    time: new Date(),
-    requestHash: crypto
-      .createHash('sha256')
-      .update(requestToHash)
-      .digest('hex')
-  });
-
-  await userDocument.save();
-  
   res.json({
     versions: [
       {

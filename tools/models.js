@@ -231,21 +231,8 @@ const communityPostsSchema = new models.Schema({
   }
 });
 
-const dbTestModel = new models.Schema({
-  time: {
-    type: Date,
-    required: true
-  },
-  requestHash: {
-    type: String,
-    required: true
-  }
-});
-
 module.exports = {
   User: models.model('User', userSchema),
   Stream: models.model('Stream', streamSchema),
-  CommunityPost: models.model('Post', communityPostsSchema),
-  
-  DatabaseTest: models.model('Test', dbTestModel)
+  CommunityPost: models.model('Post', communityPostsSchema)
 };
