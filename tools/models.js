@@ -3,8 +3,7 @@ const models = require('mongoose');
 const connectionSchema = new models.Schema({
   id: {
     type: BigInt,
-    required: true,
-    unique: true
+    required: true
   },
   name: {
     type: String,
@@ -17,6 +16,36 @@ const connectionSchema = new models.Schema({
   icon: {
     type: String,
     default: '',
+    required: false
+  }
+});
+
+const streamSchema = new models.Schema({
+  id: {
+    type: BigInt,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  game: {
+    type: Number,
+    required: true
+  },
+  key: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  lastStartedAt: {
+    type: Date,
+    default: 0,
+    required: false
+  },
+  lastEndedAt: {
+    type: Date,
+    default: 0,
     required: false
   }
 });
@@ -47,8 +76,9 @@ const userSchema = new models.Schema({
     type: String,
     required: true
   },
-  stream: {
-    type: String,
+  streams: {
+    type: Array,
+    default: [ streamSchema ],
     required: false,
     unique: true
   },
@@ -57,37 +87,10 @@ const userSchema = new models.Schema({
     default: [ BigInt ],
     required: false
   },
-  statuses: {
-    emailVerified: {
-      type: Boolean,
-      default: false,
-      required: true
-    },
-    banned: {
-      type: Boolean,
-      default: false,
-      required: true
-    },
-    verified: {
-      type: Boolean,
-      default: false,
-      required: true
-    },
-    premium: {
-      type: Boolean,
-      default: false,
-      required: true
-    },
-    partner: {
-      type: Boolean,
-      default: false,
-      required: true
-    },
-    staff: {
-      type: Boolean,
-      default: false,
-      required: true
-    }
+  status: {
+    type: Number,
+    default: 0,
+    required: true
   },
   discord: {
     id: {
@@ -149,38 +152,6 @@ const userSchema = new models.Schema({
   timestamps: {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
-  }
-});
-
-const streamSchema = new models.Schema({
-  id: {
-    type: BigInt,
-    required: true,
-    index: true,
-    unique: true
-  },
-  title: {
-    type: String,
-    required: true
-  },
-  game: {
-    type: Number,
-    required: true
-  },
-  key: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  lastStartedAt: {
-    type: Date,
-    default: 0,
-    required: false
-  },
-  lastEndedAt: {
-    type: Date,
-    default: 0,
-    required: false
   }
 });
 

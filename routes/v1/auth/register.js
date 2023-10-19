@@ -121,11 +121,12 @@ router.post('/', async (req, res) => {
     displayName: username,
     email: email,
     password: saltedPassword,
-    stream: StreamId
+    streams: [
+      streamDocument
+    ]
   });
   
   try {
-    await streamDocument.save();
     await userDocument.save();
 
     const token = sign(
