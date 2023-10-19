@@ -228,7 +228,9 @@ const requestSchema = new models.Schema({
 module.exports = {
   User: models.model('User', userSchema),
   Stream: models.model('Stream', streamSchema),
+  Connection: models.model('Connection', connectionSchema),
   CommunityPost: models.model('Post', communityPostsSchema),
+  Comment: models.model('Comment', commentSchema),
   
   Request: models.model('Request', requestSchema)
 };

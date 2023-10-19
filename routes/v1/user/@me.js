@@ -68,15 +68,9 @@ router.get('/', async (req, res) => {
       username: userDocument.username,
       displayName: userDocument.displayName,
       email: userDocument.email,
-      stream: userDocument.stream,
+      streams: userDocument.streams,
       following: userDocument.following,
-      statuses: {
-        email: userDocument.statuses.emailVerified,
-        verified: userDocument.statuses.verified,
-        premium: userDocument.statuses.premium,
-        partner: userDocument.statuses.partner,
-        staff: userDocument.statuses.staff
-      },
+      status: userDocument.status,
       discord: userDocument.discord.id,
       profile: {
         color: userDocument.profile.color,

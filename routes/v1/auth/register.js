@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { User, Stream } = require('#@/tools/models');
+const { User, Stream, Connection} = require('#@/tools/models');
 const { isEmailValid } = require('#@/tools/validators');
 
 const snowflake = require('#@/tools/snowflake');
@@ -94,8 +94,9 @@ router.post('/', async (req, res) => {
 
   const saltedPassword = await bcrypt.hash(password, saltRounds);
   
-  const userId   = snowflake.getUniqueID();
-  const StreamId = snowflake.getUniqueID();
+  const userId       = snowflake.getUniqueID();
+  const StreamId     = snowflake.getUniqueID();
+  const connectionId = snowflake.getUniqueID();
 
   const stringBuff = new Buffer(userId.toString());
   
@@ -114,6 +115,13 @@ router.post('/', async (req, res) => {
     lastStartedAt: new Date(),
     lastEndedAt: new Date()
   });
+
+  const connectionDocument = new Connection({
+    id: connectionId,
+    name: 'User',
+    url: `https://zleed.tv/@${safeUsername}`,
+    icon: 'zleed'
+  });
   
   const userDocument = new User({
     id: userId,
@@ -123,7 +131,12 @@ router.post('/', async (req, res) => {
     password: saltedPassword,
     streams: [
       streamDocument
-    ]
+    ],
+    profile: {
+      connections: [
+        connectionDocument
+      ]
+    }
   });
   
   try {
