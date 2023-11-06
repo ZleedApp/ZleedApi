@@ -2,6 +2,7 @@ use actix_web::{App, HttpServer};
 use crate::routes::index::index;
 
 mod routes;
+mod structs;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
