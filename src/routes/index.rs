@@ -13,7 +13,7 @@ pub async fn index() -> Json<IndexRes> {
     },
     path: String::from("/v1"),
     swagger: String::from("/v1/swagger.json"),
-    changelog: String::from("/v1/changelog.txt"),
+    changelog: String::from("/v1/changelog.json"),
     deprecated: false
   });
 
