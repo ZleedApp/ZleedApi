@@ -1,4 +1,4 @@
-use actix_web::{get, web, HttpResponse, Responder, ResponseError};
+use actix_web::{get};
 use actix_web::web::Json;
 use crate::structs::index::{IndexRes, Version, Versions};
 
