@@ -7,6 +7,3 @@ target/
 # env
 .env
 .env.local
-
-# data files
-data/
