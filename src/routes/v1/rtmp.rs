@@ -8,7 +8,7 @@ pub async fn rtmp_publish(req: HttpRequest) -> impl Responder  {
   // TODO: get username from stream key.
   let username = "username";
 
-  let rtmp_url = format!("rtmp://{}/live/{}", ip, username);
+  let rtmp_url = format!("rtmp://{}/hls/{}", ip, username);
 
   HttpResponse::Found()
     .append_header(("Location", rtmp_url))
