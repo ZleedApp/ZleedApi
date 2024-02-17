@@ -4,10 +4,14 @@ use actix_web::middleware::Logger;
 use dotenv::dotenv;
 use mongodb::Client;
 use mongodb::options::ClientOptions;
+
 use crate::routes::index::index;
 use crate::routes::not_found::not_found;
+use crate::routes::v1::auth::register::register;
 use crate::routes::v1::changelog::changelog;
+use crate::routes::v1::rtmp::rtmp_publish;
 use crate::routes::v1::swagger::swagger;
+use crate::routes::v1::user::me::{me_get, me_patch};
 
 mod routes;
 mod structs;
@@ -48,6 +52,10 @@ async fn main() -> std::io::Result<()> {
       .service(index)
       .service(changelog)
       .service(swagger)
+      .service(rtmp_publish)
+      .service(register)
+      .service(me_get)
+      .service(me_patch)
       .default_service(
         web::route().to(not_found)
       )
